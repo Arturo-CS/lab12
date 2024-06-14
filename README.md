@@ -33,19 +33,15 @@ Creación de la tabla con el ORM Prisma
 
 ![Uso del Orm para la BD](/assets/setup.png)
 
-Migración ejecutada
+Creación del formulario para guardar datos
 
-![comando migracion](/assets/migracion.png)
+![image](https://github.com/Arturo-CS/formulario/assets/128654866/a6249c77-0a57-4008-a303-846246a858c0)
 
-![base de datos](/assets/bd.png)
+Envio de datos
 
-Inserción de Datos
+![image](https://github.com/Arturo-CS/formulario/assets/128654866/c7ba1135-8f08-4f76-b43d-350bf41b2776)
 
-![insercion](/assets/insercion.png)
-![tabla](/assets/tabla.png)
+Lista de personas actualizada
 
-Nueva Migración
+![image](https://github.com/Arturo-CS/formulario/assets/128654866/e76dc8f9-c8a8-466e-9bbb-d33ca4fdd9eb)
 
-![change](/assets/change.png)
-![change text](/assets/change-person.png)
-![null](/assets/null.png)
