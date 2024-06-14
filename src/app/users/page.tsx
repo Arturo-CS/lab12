@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -13,8 +15,12 @@ export default async function Users() {
   const users = await prisma.person.findMany();
 
   return (
-    <div className="flex min-h-screen flex-col items-center p-24">
-      <h1 className="text-3xl font-bold mb-10">Personas</h1>
+  <div>
+    <div className="flex justify-end items-center pt-16">
+      <Button><Link href="users/create">Registrar Persona</Link></Button>
+    </div>
+    <div className="flex min-h-screen flex-col items-center pb-24 ">
+      <h1 className="text-3xl font-bold mb-10p">Personas</h1>
       <Table>
         <TableCaption>Una lista de personas</TableCaption>
         <TableHeader>
@@ -51,5 +57,6 @@ export default async function Users() {
         </TableBody>
       </Table>
     </div>
+  </div>
   );
 }
