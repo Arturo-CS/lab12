@@ -17,7 +17,11 @@ export default async function Users() {
   return (
   <div>
     <div className="flex justify-end items-center pt-16">
-      <Button><Link href="users/create">Registrar Persona</Link></Button>
+      <Link href="users/create">
+        <Button>
+          Registrar Persona
+        </Button>
+      </Link>
     </div>
     <div className="flex min-h-screen flex-col items-center pb-24 ">
       <h1 className="text-3xl font-bold mb-10p">Personas</h1>
