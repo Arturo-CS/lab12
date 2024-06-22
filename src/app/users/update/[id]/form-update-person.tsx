@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/card";
 import { createUser } from "@/actions/person-actions";
 import { userSchema } from "@/validations/personSchema"; // Asegúrate de importar el esquema de validación
+import { Person } from "@prisma/client";
+import { Decimal } from "@prisma/client/runtime/library";
 
 type Inputs = {
   cPerLastname: string;
@@ -29,21 +31,33 @@ type Inputs = {
   cPerAddress: string;
   cPerDateBorn: string;
   nPerYears: number;
-  nPerSalary: number;
+  nPerSalary: Decimal;
   cPerRnd: string;
-  cPerState: "0" | "1";
-  cPerSexo: string;
+  cPerState: string;
+  cPerSexo: string | null;
   remember_token: string;
 };
-export function FormCreatePerson() {
+
+export function FormUpdatePerson({ user }: { user: Person }) {
   const {
     register,
     handleSubmit,
     control,
-    watch,
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(userSchema),
+    defaultValues: {
+      cPerLastname: user.cPerLastname,
+      cPerName: user.cPerName,
+      cPerAddress: user.cPerAddress,
+      cPerDateBorn: user.cPerDateBorn.toISOString().split('T')[0], // Convertir a cadena en formato YYYY-MM-DD
+      nPerYears: user.nPerYears,
+      nPerSalary: user.nPerSalary,
+      cPerRnd: user.cPerRnd,
+      cPerState: user.cPerState,
+      cPerSexo: user.cPerSexo ? user.cPerSexo : null,
+      remember_token: user.remember_token,
+    },
   });
 
   console.log(errors);
@@ -59,7 +73,7 @@ export function FormCreatePerson() {
     formData.append("nPerSalary", data.nPerSalary.toString());
     formData.append("cPerRnd", data.cPerRnd);
     formData.append("cPerState", data.cPerState);
-    formData.append("cPerSexo", data.cPerSexo);
+    formData.append("cPerSexo", data.cPerSexo || '');
     formData.append("remember_token", data.remember_token);
 
     await createUser(formData);
@@ -70,9 +84,9 @@ export function FormCreatePerson() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Card className="max-w-2xl m-auto">
           <CardHeader>
-            <CardTitle className="text-3xl mb-4">Crear Persona</CardTitle>
+            <CardTitle className="text-3xl mb-4">Actualizar Persona</CardTitle>
             <CardDescription>
-              Rellena el formulario para realizar el registro.
+              Rellena el formulario para actualizar los datos.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -108,10 +122,16 @@ export function FormCreatePerson() {
               </div>
               <div className="flex flex-col space-y-3">
                 <Label htmlFor="cPerDateBorn">Fecha de Nacimiento:</Label>
-                <Input
-                  type="date"
-                  id="cPerDateBorn"
-                  {...register("cPerDateBorn")}
+                <Controller
+                  name="cPerDateBorn"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      type="date"
+                      id="cPerDateBorn"
+                      {...field}
+                    />
+                  )}
                 />
                 {errors.cPerDateBorn && (
                   <p className="text-red-500">{errors.cPerDateBorn.message}</p>
@@ -152,6 +172,7 @@ export function FormCreatePerson() {
                     <Select
                       {...field}
                       onValueChange={(value) => field.onChange(value)}
+                      defaultValue={user.cPerState}
                     >
                       <SelectTrigger id="cPerState">
                         <SelectValue placeholder="Seleccione un estado" />
@@ -169,7 +190,25 @@ export function FormCreatePerson() {
               </div>
               <div className="flex flex-col space-y-3">
                 <Label htmlFor="cPerSexo">Sexo:</Label>
-                <Input type="text" id="cPerSexo" {...register("cPerSexo")} />
+                <Controller
+                  name="cPerSexo"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      onValueChange={(value) => field.onChange(value)}
+                      defaultValue={user.cPerSexo || ''}
+                    >
+                      <SelectTrigger id="cPerSexo">
+                        <SelectValue placeholder="Seleccione el sexo" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        <SelectItem value="Masculino">Masculino</SelectItem>
+                        <SelectItem value="Femenino">Femenino</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
                 {errors.cPerSexo && (
                   <p className="text-red-500">{errors.cPerSexo.message}</p>
                 )}
@@ -189,12 +228,11 @@ export function FormCreatePerson() {
           </CardContent>
           <CardFooter className="flex w-full">
             <Button className="w-full" type="submit">
-              Crear
+              Guardar
             </Button>
           </CardFooter>
         </Card>
       </form>
-      <div>{JSON.stringify(watch(), null, 2)}</div>
     </div>
   );
 }
