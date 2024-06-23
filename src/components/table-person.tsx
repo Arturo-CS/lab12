@@ -10,7 +10,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { ButtonDelete } from "./button-delete";
 
 interface User {
   nPerCode: number;
@@ -67,13 +68,11 @@ export default function UserTable({ users }: UserTableProps) {
             <TableCell>
               <div className="flex space-x-2">
                 <Link href={`/users/update/${user.nPerCode}`}>
-                  <Button variant="outline" size="sm">
-                    <FaEdit />
+                  <Button variant="outline">
+                    <FaEdit className="h-4 w-4" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" onClick={() => handleDelete(user.nPerCode)}>
-                  <FaTrash />
-                </Button>
+                <ButtonDelete nPerCode={user.nPerCode} />
               </div>
             </TableCell>
           </TableRow>
@@ -82,8 +81,4 @@ export default function UserTable({ users }: UserTableProps) {
     </Table>
   );
 
-  function handleDelete(id: number) {
-    // Implementa la lógica para eliminar el usuario
-    console.log(`Eliminar usuario con ID: ${id}`);
-  }
 }

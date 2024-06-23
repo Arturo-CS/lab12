@@ -20,10 +20,10 @@ model Person {
   cPerAddress    String   @db.VarChar(100)
   cPerDateBorn   DateTime @db.Date
   nPerYears      Int      @db.SmallInt
-  nPerSalary     Decimal  @db.Decimal(6, 2)
+  nPerSalary     Float    @db.Real
   cPerRnd        String   @db.VarChar(50)
   cPerState      String   @db.VarChar(1)
-  cPerSexo       String?  @db.VarChar(15)
+  cPerSexo       String  @db.VarChar(15)
   remember_token String   @db.VarChar(100)
   created_at     DateTime @default(now())
   updated_at     DateTime @updatedAt

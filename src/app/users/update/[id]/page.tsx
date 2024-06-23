@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { FormUpdatePerson } from "./form-update-person";
-import { Person } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 export default async function UserUpdate({params}: {

@@ -20,21 +20,21 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createUser } from "@/actions/person-actions";
+import { updateUser } from "@/actions/person-actions";
 import { userSchema } from "@/validations/personSchema"; // Asegúrate de importar el esquema de validación
 import { Person } from "@prisma/client";
-import { Decimal } from "@prisma/client/runtime/library";
 
 type Inputs = {
+  nPerCode: number;
   cPerLastname: string;
   cPerName: string;
   cPerAddress: string;
   cPerDateBorn: string;
   nPerYears: number;
-  nPerSalary: Decimal;
+  nPerSalary: number;
   cPerRnd: string;
   cPerState: string;
-  cPerSexo: string | null;
+  cPerSexo: string;
   remember_token: string;
 };
 
@@ -47,24 +47,23 @@ export function FormUpdatePerson({ user }: { user: Person }) {
   } = useForm<Inputs>({
     resolver: zodResolver(userSchema),
     defaultValues: {
+      nPerCode: user.nPerCode,
       cPerLastname: user.cPerLastname,
       cPerName: user.cPerName,
       cPerAddress: user.cPerAddress,
-      cPerDateBorn: user.cPerDateBorn.toISOString().split('T')[0], // Convertir a cadena en formato YYYY-MM-DD
+      cPerDateBorn: user.cPerDateBorn.toISOString().split("T")[0], // Convertir a cadena en formato YYYY-MM-DD
       nPerYears: user.nPerYears,
       nPerSalary: user.nPerSalary,
       cPerRnd: user.cPerRnd,
       cPerState: user.cPerState,
-      cPerSexo: user.cPerSexo ? user.cPerSexo : null,
+      cPerSexo: user.cPerSexo,
       remember_token: user.remember_token,
     },
   });
 
-  console.log(errors);
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // Convierte los datos a FormData
     const formData = new FormData();
+    formData.append("nPerCode", user.nPerCode.toString());
     formData.append("cPerLastname", data.cPerLastname);
     formData.append("cPerName", data.cPerName);
     formData.append("cPerAddress", data.cPerAddress);
@@ -73,15 +72,17 @@ export function FormUpdatePerson({ user }: { user: Person }) {
     formData.append("nPerSalary", data.nPerSalary.toString());
     formData.append("cPerRnd", data.cPerRnd);
     formData.append("cPerState", data.cPerState);
-    formData.append("cPerSexo", data.cPerSexo || '');
+    formData.append("cPerSexo", data.cPerSexo || "");
     formData.append("remember_token", data.remember_token);
 
-    await createUser(formData);
+    await updateUser(formData);
   };
 
   return (
     <div className="flex min-h-screen w-full m-auto flex-col pb-24 pt-10">
       <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="hidden" value={user.nPerCode} {...register("nPerCode")}
+        />
         <Card className="max-w-2xl m-auto">
           <CardHeader>
             <CardTitle className="text-3xl mb-4">Actualizar Persona</CardTitle>
@@ -126,11 +127,7 @@ export function FormUpdatePerson({ user }: { user: Person }) {
                   name="cPerDateBorn"
                   control={control}
                   render={({ field }) => (
-                    <Input
-                      type="date"
-                      id="cPerDateBorn"
-                      {...field}
-                    />
+                    <Input type="date" id="cPerDateBorn" {...field} />
                   )}
                 />
                 {errors.cPerDateBorn && (
@@ -197,7 +194,7 @@ export function FormUpdatePerson({ user }: { user: Person }) {
                     <Select
                       {...field}
                       onValueChange={(value) => field.onChange(value)}
-                      defaultValue={user.cPerSexo || ''}
+                      defaultValue={user.cPerSexo}
                     >
                       <SelectTrigger id="cPerSexo">
                         <SelectValue placeholder="Seleccione el sexo" />
@@ -226,9 +223,9 @@ export function FormUpdatePerson({ user }: { user: Person }) {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex w-full">
-            <Button className="w-full" type="submit">
-              Guardar
+          <CardFooter>
+            <Button type="submit" className="w-full">
+              Actualizar
             </Button>
           </CardFooter>
         </Card>
