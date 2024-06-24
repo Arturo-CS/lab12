@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-# Laboratorio - Formulario
-=======
-# Laboratorio - Validación de Formulario
->>>>>>> 2cc402dcaae3e2e4c20eeb390a2754578e81277e
+# Laboratorio - Empresa
 
 ## Description
 
-Validación de formulario para registrar correctamente una persona usando el ORM Prisma.
+Aplicación CRUD para el registro, edición y borrado de personas.
 
 ## Installation
 
@@ -14,45 +10,49 @@ Validación de formulario para registrar correctamente una persona usando el ORM
 $ npm install
 ```
 
-## Running the app
+## Getting Started
+
+First, run the development server:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Desarrollo
 
-Formulario validado para guardar datos
+Vista terminada de la tabla personas
 
-![image](https://github.com/Arturo-CS/empresa/assets/128654866/2a5370ed-918d-4ab9-8c7f-c94726faab18)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/6d02e14b-77bd-4b73-a56f-1852d9ce7835)
 
-Envio de datos correctamente validados
+Edición de datos (Antes)
 
-![image](https://github.com/Arturo-CS/empresa/assets/128654866/e5e60b1b-d2ca-498e-b93e-843f8d8aa885)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/0f1ba020-6f03-4326-874c-8643ce41b2c9)
 
-<<<<<<< HEAD
-Creación del formulario para guardar datos
+Edición de datos (Después)
 
-![image](https://github.com/Arturo-CS/formulario/assets/128654866/a6249c77-0a57-4008-a303-846246a858c0)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/f5d324d1-d8b3-47be-a093-162bebcef0eb)
 
-Envio de datos
+Vista de datos editados en la tabla
 
-![image](https://github.com/Arturo-CS/formulario/assets/128654866/c7ba1135-8f08-4f76-b43d-350bf41b2776)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/268a7be1-840e-4d18-ad96-58c88e54f312)
 
-Lista de personas actualizada
+Eliminación de un registro (Aplicación)
 
-![image](https://github.com/Arturo-CS/formulario/assets/128654866/e76dc8f9-c8a8-466e-9bbb-d33ca4fdd9eb)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/da8d2b8e-64b1-4c26-868e-67a1055295ca)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/c7fd39e2-257d-4e2f-9f4a-c582ade56bf8)
 
-=======
-Lista de personas actualizada
+Eliminación de un registro (Base de datos)
 
-![image](https://github.com/Arturo-CS/empresa/assets/128654866/5f3595bd-cb5b-446c-9224-99f9c972c5b1)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/d90dd43d-2ca2-4f2d-890b-bb590530e633)
+![image](https://github.com/Arturo-CS/empresa/assets/128654866/3f100666-9156-401b-ab3c-66812dfd8c37)
 
->>>>>>> 2cc402dcaae3e2e4c20eeb390a2754578e81277e
