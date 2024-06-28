@@ -1,0 +1,12 @@
+.button {
+    box-sizing: border-box;
+    background-color: aqua;
+}
+
+.centrar {
+    display: flex;
+}
+
+.px {
+    padding: 0px 20px;
+}
