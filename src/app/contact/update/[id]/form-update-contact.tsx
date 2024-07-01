@@ -24,11 +24,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from "@/actions/send-email";
-import { CreateContact } from "@/actions/contact-actions";
+import { UpdateContact } from "@/actions/contact-actions";
 
-function FormContact() {
+interface FormUpdateContactProps {
+    contact: z.infer<typeof contactSchema>;
+    id: number;
+  }
+
+function FormUpdateContact({ contact, id }: FormUpdateContactProps) {
   const form = useForm<z.infer<typeof contactSchema>>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+        name: contact.name,
+        email: contact.email,
+        mailSubject: contact.mailSubject,
+        mailMessage: contact.mailMessage,
+    }
   });
 
   const onSubmit = async (data: z.infer<typeof contactSchema>) => {
@@ -44,7 +55,7 @@ function FormContact() {
         <p>${data.mailMessage}</p>`,
       });
       console.log("Email enviado correctamente.");
-      if (result.messageId) await CreateContact(data);
+      if (result.messageId) await UpdateContact(id , data);
       form.reset()
     } catch (error: any) {
       console.error("Error al enviar el email: %s", error.message);
@@ -56,9 +67,9 @@ function FormContact() {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card>
           <CardHeader>
-            <CardTitle className="text-3xl mb-4">Contactar</CardTitle>
+            <CardTitle className="text-3xl mb-4">Actualizar información</CardTitle>
             <CardDescription>
-              Rellena el formulario para contactar conmigo.
+              Rellena el formulario para actualizar.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -124,4 +135,4 @@ function FormContact() {
   );
 }
 
-export default FormContact;
+export default FormUpdateContact;

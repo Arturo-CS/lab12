@@ -48,7 +48,7 @@ export async function removeUser(formData: FormData) {
     },
   });
 
-  revalidatePath("/");
+  revalidatePath("/users");
 }
 
 export async function updateUser(formData: FormData) {

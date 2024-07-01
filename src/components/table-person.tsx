@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import { FaEdit } from "react-icons/fa";
 import { ButtonDelete } from "./button-delete";
+import { removeUser } from "@/actions/person-actions";
 
 interface User {
   nPerCode: number;
@@ -72,7 +73,7 @@ export default function UserTable({ users }: UserTableProps) {
                     <FaEdit className="h-4 w-4" />
                   </Button>
                 </Link>
-                <ButtonDelete nPerCode={user.nPerCode} />
+                <ButtonDelete nPerCode={user.nPerCode} functionRemove={removeUser} label="nPerCode" />
               </div>
             </TableCell>
           </TableRow>
