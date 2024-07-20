@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Person {
-  nPerCode       Int      @id @default(autoincrement()) @db.Integer
+  nPerCode       String   @id @default(uuid()) @db.Uuid
   cPerLastname   String   @db.VarChar(50)
   cPerName       String   @db.VarChar(50)
   cPerAddress    String   @db.VarChar(100)
@@ -41,4 +41,11 @@ model Contact {
   email       String @db.VarChar(50)
   mailSubject String @db.VarChar(50)
   mailMessage String @db.VarChar(255)
+}
+
+model User {
+  id       String @id @default(uuid()) @db.Uuid
+  username String @unique @db.VarChar(50)
+  email    String @unique @db.VarChar(100)
+  password String @db.VarChar(255)
 }
